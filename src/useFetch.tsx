@@ -5,14 +5,13 @@ function useFetch(props: IProps) {
   const [data, setData] = useState();
 
   useEffect(() => {
-    fetch(`https://opentdb.com/api.php?amount=5&difficulty=${props.diff}`)
+    fetch(`https://opentdb.com/api.php?amount=5&difficulty=${props.difficulty}`)
       .then((res) => res.json())
       .then((data) => {
         setData(data);
-        console.log(data);
+        //console.log(data);
       });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [props.difficulty]);
   return data;
 }
 
