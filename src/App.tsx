@@ -1,26 +1,13 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import useFetch from "./useFetch";
+
+import "./App.css";
+// https://opentdb.com/api.php?amount=5&difficulty=medium
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  const [difficulty, setDifficulty] = useState<string>("medium");
+  useFetch({ diff: difficulty });
+  return <div>asd</div>;
 }
 
 export default App;
