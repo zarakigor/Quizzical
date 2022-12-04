@@ -1,3 +1,3 @@
 export interface IProps {
-  diff: string;
+  difficulty: string;
 }
