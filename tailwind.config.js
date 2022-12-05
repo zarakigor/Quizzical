@@ -3,9 +3,8 @@ module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {
-      fontFamily: {
-        Inter: ["Inter"],
-      },
+      fontFamily: { karla: ["Karla", "Arial", "sans-serif"] },
+      inter: ["Inter", "Tahoma", "sans-serif"],
     },
   },
   plugins: [],
