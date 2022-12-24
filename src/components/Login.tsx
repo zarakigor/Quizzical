@@ -9,9 +9,15 @@ function Login() {
       <h3 className={"font-inter mt-2 mb-7"}>Some description if needed</h3>
 
       <div>
-        <button onClick={AppContext?.handleDifficulty}>Easy</button>
-        <button>Medium</button>
-        <button>Difficult</button>
+        <button onClick={AppContext?.handleDifficulty} value={"easy"}>
+          Easy
+        </button>
+        <button onClick={AppContext?.handleDifficulty} value={"medium"}>
+          Medium
+        </button>
+        <button onClick={AppContext?.handleDifficulty} value={"hard"}>
+          Hard
+        </button>
       </div>
 
       <button
