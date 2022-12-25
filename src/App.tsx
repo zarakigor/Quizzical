@@ -10,11 +10,11 @@ function App() {
   // burayı değiştir çalışmıyor
   //const asd = useFetch({ difficulty: difficulty });
 
-  console.log(useContext(Context));
+  //console.log(useContext(Context));
 
   return (
     <div className={"flex justify-center items-center h-screen"}>
-      {AppContext?.difficulty ? <Questions /> : <Login />}
+      {AppContext?.isQuestionsReady ? <Questions /> : <Login />}
     </div>
   );
 }
