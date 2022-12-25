@@ -24,6 +24,7 @@ function Login() {
         className={
           "text-secondary font-medium bg-primary_bg py-4 px-14 rounded-2xl"
         }
+        onClick={AppContext?.startQuiz}
       >
         Start Quiz
       </button>
