@@ -1,50 +1,42 @@
 import React, { useState, useEffect, createContext } from "react";
 
-interface IProps {
+interface IContextProvider {
   children: React.ReactNode;
 }
 
 interface IContext {
   difficulty: string | null;
-  handleDifficulty: any; // any yi değiştir
+  isQuestionsReady: boolean;
+  handleDifficulty: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  startQuiz: () => void;
 }
 
 // {} değil sanırım
+// const Context = createContext({} as IContext);
 const Context = createContext<IContext | null>(null);
 
-function ContextProvider({ children }: IProps) {
-  const [difficulty, setDifficulty] = useState(null);
+function ContextProvider({ children }: IContextProvider) {
+  const [difficulty, setDifficulty] = useState<string | null>(null);
+  const [isQuestionsReady, setIsQuestionsReady] = useState<boolean>(false);
 
-  function handleDifficulty(event: React.ChangeEvent<HTMLButtonElement>) {
-    //console.log("button çalışıyor");
-    //const target = event.target as HTMLInputElement;
-    console.log(event.target.value);
+  function handleDifficulty(event: React.MouseEvent<HTMLButtonElement>): void {
+    console.log(event.currentTarget.value);
+    setDifficulty(event.currentTarget.value);
+  }
+
+  function startQuiz() {
+    if (difficulty) {
+      setIsQuestionsReady(true);
+    }
   }
 
   return (
-    <Context.Provider value={{ difficulty, handleDifficulty }}>
+    <Context.Provider
+      value={{ difficulty, handleDifficulty, isQuestionsReady, startQuiz }}
+    >
       {children}
     </Context.Provider>
   );
 }
 
 export { ContextProvider, Context };
-
-// interface IProps {
-//   difficulty: string;
-// }
-
-// const Context = createContext<IProps | null>(null);
-
-// function ContextProvider({ children }) {
-//   const [difficulty, setDifficulty] = useState<string>("");
-//   return (
-//     <Context.Provider
-//       value={{
-//         difficulty,
-//       }}
-//     ></Context.Provider>
-//   );
-// }
-
-// export { ContextProvider, Context };
