@@ -19,14 +19,8 @@ function ContextProvider({ children }: IContextProvider) {
   const [difficulty, setDifficulty] = useState<string | null>(null);
   const [isQuestionsReady, setIsQuestionsReady] = useState<boolean>(false);
 
-  const [data, setData] = useState<any[]>([]);
-  const [correctAnswers, setCorrectAnswers] = useState<string[]>([]);
-
-  // const [data, setData] = useState({
-  //   question: "",
-  //   answers: [],
-  //   correct_answer: "",
-  // });
+  const [data, setData] = useState<object[]>([]);
+  //const [correctAnswers, setCorrectAnswers] = useState<string[]>([]);
 
   function handleDifficulty(event: React.MouseEvent<HTMLButtonElement>): void {
     console.log(event.currentTarget.value);
@@ -36,8 +30,8 @@ function ContextProvider({ children }: IContextProvider) {
   function startQuiz() {
     if (difficulty) {
       setIsQuestionsReady(true);
-      filterCorrectAnswers();
-      //console.log(data[0]);
+      console.log(data[0]);
+      //console.log(data[0].incorrect_answers);
     }
   }
   useEffect(() => {
@@ -46,21 +40,26 @@ function ContextProvider({ children }: IContextProvider) {
     )
       .then((res) => res.json())
       .then((data) => {
-        //setData(data.results);
+        let arrayOfQuestions = [];
 
-        // console.log(data.results[0].correct_answer);
-        // console.log(data.results[0]?.incorrect_answers);
-        // for (let i = 0; i < 5; i++) {
-        //   console.log(data.results[i]);
-        // }
-        setData(data.results);
+        for (let i = 0; i < 5; i++) {
+          let questionPackage: {
+            question: string;
+            correct_answer: string;
+            options: string[];
+          } = {
+            question: data.results[i]?.question,
+            correct_answer: data.results[i]?.correct_answer,
+            options: [
+              ...data.results[i]?.incorrect_answers,
+              data.results[i]?.correct_answer,
+            ],
+          };
+          arrayOfQuestions.push(questionPackage);
+        }
+        setData(arrayOfQuestions);
       });
   }, [difficulty]);
-
-  function filterCorrectAnswers() {
-    setCorrectAnswers(data.map((x) => x.correct_answer));
-  }
-  console.log(correctAnswers);
 
   return (
     <Context.Provider
