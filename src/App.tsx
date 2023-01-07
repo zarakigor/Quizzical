@@ -2,7 +2,6 @@ import { useContext } from "react";
 import { Context } from "./Context";
 import Login from "./components/Login";
 import Questions from "./components/Questions";
-import useFetch from "./useFetch";
 
 function App() {
   const AppContext = useContext(Context);
