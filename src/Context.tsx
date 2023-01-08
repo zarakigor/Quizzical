@@ -3,12 +3,18 @@ import React, { useState, useEffect, createContext } from "react";
 interface IContextProvider {
   children: React.ReactNode;
 }
+interface IData {
+  question?: string;
+  correct_answer?: string;
+  options?: string[];
+}
 
 interface IContext {
   difficulty: string | null;
   isQuestionsReady: boolean;
   handleDifficulty: (event: React.MouseEvent<HTMLButtonElement>) => void;
   startQuiz: () => void;
+  data: Array<IData>;
 }
 
 // {} değil sanırım
@@ -19,7 +25,7 @@ function ContextProvider({ children }: IContextProvider) {
   const [difficulty, setDifficulty] = useState<string | null>(null);
   const [isQuestionsReady, setIsQuestionsReady] = useState<boolean>(false);
 
-  const [data, setData] = useState<object[]>([]);
+  const [data, setData] = useState<Array<IData>>([]);
   //const [correctAnswers, setCorrectAnswers] = useState<string[]>([]);
 
   function handleDifficulty(event: React.MouseEvent<HTMLButtonElement>): void {
@@ -63,7 +69,13 @@ function ContextProvider({ children }: IContextProvider) {
 
   return (
     <Context.Provider
-      value={{ difficulty, handleDifficulty, isQuestionsReady, startQuiz }}
+      value={{
+        difficulty,
+        handleDifficulty,
+        isQuestionsReady,
+        startQuiz,
+        data,
+      }}
     >
       {children}
     </Context.Provider>
