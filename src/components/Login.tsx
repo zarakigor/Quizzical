@@ -4,7 +4,11 @@ import { Context } from "../Context";
 function Login() {
   const AppContext = useContext(Context);
   return (
-    <div className={"text-primary flex flex-col items-center"}>
+    <div
+      className={
+        "flex flex-col items-center justify-center h-screen text-primary"
+      }
+    >
       <h1 className={"font-karla font-bold text-3xl"}>Quizzical</h1>
       <h3 className={"font-inter mt-2 mb-7"}>Some description if needed</h3>
 
