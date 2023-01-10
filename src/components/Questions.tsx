@@ -5,6 +5,10 @@ import { nanoid } from "nanoid";
 function Questions() {
   const AppContext = useContext(Context);
 
+  // correct answer in data is the last array element
+  function shuffle(arr: string[]) {
+    return [...arr].sort(() => Math.random() - 0.5);
+  }
   return (
     <>
       {AppContext?.data.map((element: IData) => {
@@ -12,7 +16,7 @@ function Questions() {
           <div key={nanoid()}>
             <p> {element.question}</p>
             <div>
-              {element.options!.map((option) => {
+              {shuffle(element.options!).map((option) => {
                 return <p key={nanoid()}>{option}</p>;
               })}
             </div>
