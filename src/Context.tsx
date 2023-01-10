@@ -3,9 +3,9 @@ import React, { useState, useEffect, createContext } from "react";
 interface IContextProvider {
   children: React.ReactNode;
 }
-interface IData {
+export interface IData {
   question?: string;
-  correct_answer?: string;
+  correct_answer?: string | number;
   options?: string[];
 }
 
@@ -36,7 +36,7 @@ function ContextProvider({ children }: IContextProvider) {
   function startQuiz() {
     if (difficulty) {
       setIsQuestionsReady(true);
-      console.log(data[0]);
+      console.log(data);
       //console.log(data[0].incorrect_answers);
     }
   }
