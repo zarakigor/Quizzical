@@ -6,13 +6,8 @@ import Questions from "./components/Questions";
 function App() {
   const AppContext = useContext(Context);
 
-  // burayı değiştir çalışmıyor
-  //const asd = useFetch({ difficulty: difficulty });
-
-  //console.log(useContext(Context));
-
   return (
-    <div className={"flex justify-center items-center h-screen"}>
+    <div className={""}>
       {AppContext?.isQuestionsReady ? <Questions /> : <Login />}
     </div>
   );
