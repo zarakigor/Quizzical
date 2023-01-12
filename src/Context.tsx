@@ -6,7 +6,7 @@ interface IContextProvider {
 export interface IData {
   question?: string;
   correct_answer?: string | number;
-  options?: string[];
+  choices?: string[];
 }
 
 interface IContext {
@@ -52,11 +52,11 @@ function ContextProvider({ children }: IContextProvider) {
           let questionPackage: {
             question: string;
             correct_answer: string;
-            options: string[];
+            choices: string[];
           } = {
             question: data.results[i]?.question,
             correct_answer: data.results[i]?.correct_answer,
-            options: [
+            choices: [
               ...data.results[i]?.incorrect_answers,
               data.results[i]?.correct_answer,
             ],

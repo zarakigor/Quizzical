@@ -16,16 +16,16 @@ function Questions() {
           <div key={nanoid()} className={"text-primary"}>
             <p className={"font-karla font-bold "}>{element.question}</p>
             <div>
-              {shuffle(element.options!).map((option) => {
+              {shuffle(element.choices!).map((choice) => {
                 return (
                   <button
                     key={nanoid()}
                     className={
                       "font-inter font-medium text-xs border border-primary px-2 py-1 rounded-lg mt-3 mr-3"
                     }
-                    value={option}
+                    value={choice}
                   >
-                    {option}
+                    {choice}
                   </button>
                 );
               })}
