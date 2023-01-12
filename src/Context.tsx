@@ -54,7 +54,9 @@ function ContextProvider({ children }: IContextProvider) {
             correct_answer: string;
             choices: string[];
           } = {
-            question: data.results[i]?.question,
+            question: data.results[i]?.question
+              .replace(/&#039;/g, "'")
+              .replace(/&quot;/g, '"'),
             correct_answer: data.results[i]?.correct_answer,
             choices: [
               ...data.results[i]?.incorrect_answers,
