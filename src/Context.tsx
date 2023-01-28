@@ -4,9 +4,10 @@ interface IContextProvider {
   children: React.ReactNode;
 }
 export interface IData {
-  question?: string;
-  correct_answer?: string | number;
-  choices?: string[];
+  index?: number;
+  question: string;
+  correct_answer: string | number;
+  choices: string[];
 }
 
 interface IContext {
@@ -15,6 +16,9 @@ interface IContext {
   handleDifficulty: (event: React.MouseEvent<HTMLButtonElement>) => void;
   startQuiz: () => void;
   data: Array<IData>;
+  endGame: boolean;
+  chosenChoices: string[];
+  setChosenChoices: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
 // {} değil sanırım
@@ -24,8 +28,10 @@ const Context = createContext<IContext | null>(null);
 function ContextProvider({ children }: IContextProvider) {
   const [difficulty, setDifficulty] = useState<string | null>(null);
   const [isQuestionsReady, setIsQuestionsReady] = useState<boolean>(false);
+  const [endGame, setEndGame] = useState<boolean>(false);
 
   const [data, setData] = useState<Array<IData>>([]);
+  const [chosenChoices, setChosenChoices] = useState(["", "", "", "", ""]);
   //const [correctAnswers, setCorrectAnswers] = useState<string[]>([]);
 
   function handleDifficulty(event: React.MouseEvent<HTMLButtonElement>): void {
@@ -77,6 +83,9 @@ function ContextProvider({ children }: IContextProvider) {
         isQuestionsReady,
         startQuiz,
         data,
+        endGame,
+        chosenChoices,
+        setChosenChoices,
       }}
     >
       {children}
