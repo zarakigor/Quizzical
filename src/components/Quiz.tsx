@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { Context, IData } from "../Context";
 import { nanoid } from "nanoid";
 
@@ -10,7 +10,7 @@ function Quiz(props: IData) {
     return [...arr].sort(() => Math.random() - 0.5);
   }
 
-  function handleChosens(choice: string, index: number) {
+  function handleChosenChoices(choice: string, index: number) {
     let arr: string[] | undefined = AppContext?.chosenChoices;
     arr![index] = choice;
     AppContext?.setChosenChoices(arr!);
@@ -22,11 +22,11 @@ function Quiz(props: IData) {
 
     for (let i = 0; i < 4; i++) {
       let element = document.getElementsByClassName(`${index}`)[i];
-      element.classList.remove("bg-green-500");
+      element.classList.remove("bg-secondary_bg", "border-transparent");
     }
 
-    handleChosens(e.target.value, index);
-    e.target.classList.add("bg-green-500");
+    handleChosenChoices(e.target.value, index);
+    e.target.classList.add("bg-secondary_bg", "border-transparent");
     console.log(AppContext?.chosenChoices);
   }
 
