@@ -10,22 +10,23 @@ function Quiz(props: IData) {
     return [...arr].sort(() => Math.random() - 0.5);
   }
 
-  function handleChosenChoices(choice: string, index: number) {
+  function handleChosenChoices(choice: string) {
     let arr: string[] | undefined = AppContext?.chosenChoices;
-    arr![index] = choice;
+    arr![props.index] = choice;
     AppContext?.setChosenChoices(arr!);
   }
 
-  function handleClick(e: any, index: number) {
+  function handleClick(e: any) {
     //console.log(e.target.value);
     console.log(props.index);
+    console.log(props.correct_answer);
 
     for (let i = 0; i < 4; i++) {
-      let element = document.getElementsByClassName(`${index}`)[i];
+      let element = document.getElementsByClassName(`${props.index}`)[i];
       element.classList.remove("bg-secondary_bg", "border-transparent");
     }
 
-    handleChosenChoices(e.target.value, index);
+    handleChosenChoices(e.target.value);
     e.target.classList.add("bg-secondary_bg", "border-transparent");
     console.log(AppContext?.chosenChoices);
   }
@@ -39,7 +40,7 @@ function Quiz(props: IData) {
             <button
               key={nanoid()}
               className={`${props.index} font-inter font-medium text-xs border border-primary px-2 py-1 rounded-lg mt-3 mr-3`}
-              onClick={(e) => handleClick(e, props.index!)}
+              onClick={(e) => handleClick(e)}
               value={choice}
             >
               {choice}
