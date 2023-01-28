@@ -1,14 +1,30 @@
 import { useContext } from "react";
-import { Context } from "./Context";
+import { Context, IData } from "./Context";
 import Login from "./components/Login";
 import Questions from "./components/Questions";
+import Quiz from "./components/Quiz";
+import { nanoid } from "nanoid";
 
 function App() {
   const AppContext = useContext(Context);
 
+  const QuizElements = AppContext?.data.map((element: IData, index) => (
+    <Quiz
+      key={nanoid()}
+      index={index}
+      question={element.question}
+      choices={element.choices}
+      correct_answer={element.correct_answer}
+    />
+  ));
+
   return (
     <div className={""}>
-      {AppContext?.isQuestionsReady ? <Questions /> : <Login />}
+      {AppContext?.isQuestionsReady ? (
+        <div className={"mt-10 mx-10"}>{QuizElements}</div>
+      ) : (
+        <Login />
+      )}
     </div>
   );
 }
