@@ -32,14 +32,14 @@ function Quiz(props: IData) {
   }
 
   return (
-    <div className={"text-primary"}>
-      <p className={"font-karla font-bold "}>{props.question}</p>
+    <div>
+      <p className={"text-primary font-karla font-bold "}>{props.question}</p>
       <div>
         {shuffle(props.choices).map((choice) => {
           return (
             <button
               key={nanoid()}
-              className={`${props.index} font-inter font-medium text-xs border border-primary px-2 py-1 rounded-lg mt-3 mr-3`}
+              className={`${props.index} text-primary font-inter font-medium text-xs border border-primary  px-2 py-1 rounded-lg mt-3 mr-3`}
               onClick={(e) => handleClick(e)}
               value={choice}
             >
