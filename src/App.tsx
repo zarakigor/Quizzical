@@ -27,6 +27,7 @@ function App() {
             className={
               "text-secondary text-sm font-semibold bg-primary_bg py-3 px-5 rounded-xl self-center"
             }
+            onClick={AppContext.checkAnswers}
           >
             Check answers
           </button>
