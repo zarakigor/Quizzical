@@ -4,7 +4,7 @@ interface IContextProvider {
   children: React.ReactNode;
 }
 export interface IData {
-  index?: number;
+  index: number;
   question: string;
   correct_answer: string | number;
   choices: string[];
@@ -56,10 +56,12 @@ function ContextProvider({ children }: IContextProvider) {
 
         for (let i = 0; i < 5; i++) {
           let questionPackage: {
+            index: number;
             question: string;
             correct_answer: string;
             choices: string[];
           } = {
+            index: 0,
             question: data.results[i]?.question
               .replace(/&#039;/g, "'")
               .replace(/&quot;/g, '"'),
