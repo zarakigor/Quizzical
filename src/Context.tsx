@@ -14,11 +14,12 @@ interface IContext {
   difficulty: string | null;
   isQuestionsReady: boolean;
   handleDifficulty: (event: React.MouseEvent<HTMLButtonElement>) => void;
-  startQuiz: () => void;
+  startQuiz: React.MouseEventHandler<HTMLButtonElement> | undefined;
   data: Array<IData>;
   endGame: boolean;
   chosenChoices: string[];
   setChosenChoices: React.Dispatch<React.SetStateAction<string[]>>;
+  checkAnswers: React.MouseEventHandler<HTMLButtonElement> | undefined;
 }
 
 // {} değil sanırım
@@ -46,6 +47,11 @@ function ContextProvider({ children }: IContextProvider) {
       //console.log(data[0].incorrect_answers);
     }
   }
+
+  function checkAnswers() {
+    console.log("check answers");
+  }
+
   useEffect(() => {
     fetch(
       `https://opentdb.com/api.php?amount=5&difficulty=${difficulty}&type=multiple`
@@ -64,7 +70,9 @@ function ContextProvider({ children }: IContextProvider) {
             index: 0,
             question: data.results[i]?.question
               .replace(/&#039;/g, "'")
-              .replace(/&quot;/g, '"'),
+              .replace(/&quot;/g, '"')
+              .replace(/&ldquo;/g, "«")
+              .replace(/&rdquo;/g, "»"),
             correct_answer: data.results[i]?.correct_answer,
             choices: [
               ...data.results[i]?.incorrect_answers,
@@ -88,6 +96,7 @@ function ContextProvider({ children }: IContextProvider) {
         endGame,
         chosenChoices,
         setChosenChoices,
+        checkAnswers,
       }}
     >
       {children}
@@ -96,3 +105,5 @@ function ContextProvider({ children }: IContextProvider) {
 }
 
 export { ContextProvider, Context };
+
+//replace i bir function yap tekrarlanabilir olsun
