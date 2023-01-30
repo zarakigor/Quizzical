@@ -21,7 +21,16 @@ function App() {
   return (
     <div className={""}>
       {AppContext?.isQuestionsReady ? (
-        <div className={"mt-10 mx-10"}>{QuizElements}</div>
+        <div className={"flex flex-col mt-10 mx-10"}>
+          {QuizElements}
+          <button
+            className={
+              "text-secondary text-sm font-semibold bg-primary_bg py-3 px-5 rounded-xl self-center"
+            }
+          >
+            Check answers
+          </button>
+        </div>
       ) : (
         <Login />
       )}
