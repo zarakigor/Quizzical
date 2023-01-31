@@ -2,10 +2,10 @@ import { useContext } from "react";
 import { Context, IData } from "../Context";
 import { nanoid } from "nanoid";
 
-// any yi kaldır
 function Quiz(props: IData) {
   const AppContext = useContext(Context);
 
+  // to prevent the choices from being displayed in alphabetical order
   function shuffle(arr: string[]) {
     return [...arr].sort(() => Math.random() - 0.5);
   }
@@ -16,9 +16,9 @@ function Quiz(props: IData) {
     AppContext?.setChosenChoices(arr!);
   }
 
-  function handleClick(e: any) {
+  function handleCheckAnswers(e: any) {
     //console.log(e.target.value);
-    console.log(props.index);
+    //console.log(props.index);
     console.log(props.correct_answer);
 
     for (let i = 0; i < 4; i++) {
@@ -39,8 +39,9 @@ function Quiz(props: IData) {
           return (
             <button
               key={nanoid()}
+              id={choice}
               className={`${props.index} text-primary font-inter font-medium text-xs border border-primary  px-2 py-1 rounded-lg mt-3 mr-3`}
-              onClick={(e) => handleClick(e)}
+              onClick={(e) => handleCheckAnswers(e)}
               value={choice}
             >
               {choice}
