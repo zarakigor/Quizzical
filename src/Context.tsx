@@ -19,6 +19,7 @@ interface IContext {
   endGame: boolean;
   chosenChoices: string[];
   setChosenChoices: React.Dispatch<React.SetStateAction<string[]>>;
+  correctAnswers: string[];
   checkAnswers: React.MouseEventHandler<HTMLButtonElement> | undefined;
 }
 
@@ -32,8 +33,8 @@ function ContextProvider({ children }: IContextProvider) {
   const [endGame, setEndGame] = useState<boolean>(false);
 
   const [data, setData] = useState<Array<IData>>([]);
+  const [correctAnswers, setCorrectAnswers] = useState<string[]>([]);
   const [chosenChoices, setChosenChoices] = useState(["", "", "", "", ""]);
-  //const [correctAnswers, setCorrectAnswers] = useState<string[]>([]);
 
   function handleDifficulty(event: React.MouseEvent<HTMLButtonElement>): void {
     console.log(event.currentTarget.value);
@@ -49,7 +50,10 @@ function ContextProvider({ children }: IContextProvider) {
   }
 
   function checkAnswers() {
-    console.log("check answers");
+    //loop ile buttonları renklendir
+    //document.getElementsByClassName("1")[0].classList.add("bg-green-500");
+    console.log(chosenChoices[0]);
+    console.log(correctAnswers);
   }
 
   useEffect(() => {
@@ -59,6 +63,7 @@ function ContextProvider({ children }: IContextProvider) {
       .then((res) => res.json())
       .then((data) => {
         let arrayOfQuestions = [];
+        let arrayOfCorrectAnswers = [];
 
         for (let i = 0; i < 5; i++) {
           let questionPackage: {
@@ -80,8 +85,10 @@ function ContextProvider({ children }: IContextProvider) {
             ],
           };
           arrayOfQuestions.push(questionPackage);
+          arrayOfCorrectAnswers.push(data.results[i].correct_answer);
         }
         setData(arrayOfQuestions);
+        setCorrectAnswers(arrayOfCorrectAnswers);
       });
   }, [difficulty]);
 
@@ -96,6 +103,7 @@ function ContextProvider({ children }: IContextProvider) {
         endGame,
         chosenChoices,
         setChosenChoices,
+        correctAnswers,
         checkAnswers,
       }}
     >
