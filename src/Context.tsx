@@ -50,9 +50,32 @@ function ContextProvider({ children }: IContextProvider) {
   }
 
   function checkAnswers() {
+    document.querySelectorAll(".choice").forEach((choice) => {
+      choice.classList.add("text-opacity-50");
+    });
+
+    // chosenChoices.forEach((choice) => {
+    //   document.getElementById(`${choice}`)?.classList.remove("primary_bg");
+    //   document.getElementById(`${choice}`)?.classList.add("wrong_choice_bg");
+    // });
+
+    chosenChoices.forEach((choice) => {
+      document.getElementById(`${choice}`)?.classList.remove("bg-secondary_bg");
+      document.getElementById(`${choice}`)?.classList.add("bg-wrong_answer_bg");
+    });
+
     //loop ile buttonları renklendir
     //document.getElementsByClassName("1")[0].classList.add("bg-green-500");
-    console.log(chosenChoices[0]);
+    // for (let i = 0; i <= 4; i++) {
+    //   document
+    //     .getElementsByClassName(`${i}`)[0]
+    //     .classList.remove("bg-secondary_bg", "border-transparent");
+    //   document
+    //     .getElementsByClassName(`${i}`)[0]
+    //     .classList.add("bg-green-500", "text-opacity-50");
+    // }
+
+    //console.log(chosenChoices[0]);
     console.log(correctAnswers);
   }
 
