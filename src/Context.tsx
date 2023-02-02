@@ -45,7 +45,6 @@ function ContextProvider({ children }: IContextProvider) {
     if (difficulty) {
       setIsQuestionsReady(true);
       console.log(data);
-      //console.log(data[0].incorrect_answers);
     }
   }
 
@@ -59,9 +58,16 @@ function ContextProvider({ children }: IContextProvider) {
     //   document.getElementById(`${choice}`)?.classList.add("wrong_choice_bg");
     // });
 
-    chosenChoices.forEach((choice) => {
+    chosenChoices.forEach((choice: string) => {
       document.getElementById(`${choice}`)?.classList.remove("bg-secondary_bg");
       document.getElementById(`${choice}`)?.classList.add("bg-wrong_answer_bg");
+    });
+
+    correctAnswers.forEach((answer: string) => {
+      document
+        .getElementById(`${answer}`)
+        ?.classList.add("bg-correct_answer_bg");
+      document.getElementById(`${answer}`)?.classList.remove("text-opacity-50");
     });
 
     //loop ile buttonları renklendir
