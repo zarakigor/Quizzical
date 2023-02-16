@@ -16,47 +16,42 @@ interface IContext {
   handleDifficulty: (event: React.MouseEvent<HTMLButtonElement>) => void;
   startQuiz: React.MouseEventHandler<HTMLButtonElement> | undefined;
   data: Array<IData>;
-  endGame: boolean;
   chosenChoices: string[];
   setChosenChoices: React.Dispatch<React.SetStateAction<string[]>>;
   correctAnswers: string[];
-  checkAnswers: React.MouseEventHandler<HTMLButtonElement> | undefined;
+  checkAnswers: React.MouseEventHandler<HTMLButtonElement>;
+  shuffle: any;
 }
 
-// {} değil sanırım
-// const Context = createContext({} as IContext);
 const Context = createContext<IContext | null>(null);
 
 function ContextProvider({ children }: IContextProvider) {
   const [difficulty, setDifficulty] = useState<string | null>(null);
   const [isQuestionsReady, setIsQuestionsReady] = useState<boolean>(false);
-  const [endGame, setEndGame] = useState<boolean>(false);
 
   const [data, setData] = useState<Array<IData>>([]);
-  const [correctAnswers, setCorrectAnswers] = useState<string[]>([]);
   const [chosenChoices, setChosenChoices] = useState(["", "", "", "", ""]);
+  const [correctAnswers, setCorrectAnswers] = useState<string[]>([]);
 
   function handleDifficulty(event: React.MouseEvent<HTMLButtonElement>): void {
-    console.log(event.currentTarget.value);
     setDifficulty(event.currentTarget.value);
   }
 
   function startQuiz() {
     if (difficulty) {
       setIsQuestionsReady(true);
-      console.log(data);
     }
   }
 
-  function checkAnswers() {
+  // to prevent displaying correct answer at last index
+  function shuffle(arr: string[]) {
+    return [...arr].sort(() => Math.random() - 0.5);
+  }
+
+  function checkAnswers(e: any) {
     document.querySelectorAll(".choice").forEach((choice) => {
       choice.classList.add("text-opacity-50");
     });
-
-    // chosenChoices.forEach((choice) => {
-    //   document.getElementById(`${choice}`)?.classList.remove("primary_bg");
-    //   document.getElementById(`${choice}`)?.classList.add("wrong_choice_bg");
-    // });
 
     chosenChoices.forEach((choice: string) => {
       document.getElementById(`${choice}`)?.classList.remove("bg-secondary_bg");
@@ -69,20 +64,6 @@ function ContextProvider({ children }: IContextProvider) {
         ?.classList.add("bg-correct_answer_bg");
       document.getElementById(`${answer}`)?.classList.remove("text-opacity-50");
     });
-
-    //loop ile buttonları renklendir
-    //document.getElementsByClassName("1")[0].classList.add("bg-green-500");
-    // for (let i = 0; i <= 4; i++) {
-    //   document
-    //     .getElementsByClassName(`${i}`)[0]
-    //     .classList.remove("bg-secondary_bg", "border-transparent");
-    //   document
-    //     .getElementsByClassName(`${i}`)[0]
-    //     .classList.add("bg-green-500", "text-opacity-50");
-    // }
-
-    //console.log(chosenChoices[0]);
-    console.log(correctAnswers);
   }
 
   useEffect(() => {
@@ -129,11 +110,11 @@ function ContextProvider({ children }: IContextProvider) {
         isQuestionsReady,
         startQuiz,
         data,
-        endGame,
         chosenChoices,
         setChosenChoices,
         correctAnswers,
         checkAnswers,
+        shuffle,
       }}
     >
       {children}
