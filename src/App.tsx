@@ -1,9 +1,9 @@
 import { useContext } from "react";
 import { Context, IData } from "./Context";
-import Login from "./components/Login";
-import Questions from "./components/Questions";
-import Quiz from "./components/Quiz";
 import { nanoid } from "nanoid";
+import Login from "./components/Login";
+import Quiz from "./components/Quiz";
+import Endgame from "./components/Endgame";
 
 function App() {
   const AppContext = useContext(Context);
@@ -13,7 +13,7 @@ function App() {
       key={nanoid()}
       index={index}
       question={element.question}
-      choices={element.choices}
+      choices={AppContext.shuffle(element.choices)}
       correct_answer={element.correct_answer}
     />
   ));
@@ -23,14 +23,8 @@ function App() {
       {AppContext?.isQuestionsReady ? (
         <div className={"flex flex-col mt-10 mx-10"}>
           {QuizElements}
-          <button
-            className={
-              "text-secondary text-sm font-semibold bg-primary_bg py-3 px-5 rounded-xl self-center"
-            }
-            onClick={AppContext.checkAnswers}
-          >
-            Check answers
-          </button>
+
+          <Endgame />
         </div>
       ) : (
         <Login />
