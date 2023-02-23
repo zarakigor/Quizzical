@@ -22,9 +22,9 @@ function Score() {
   }
 
   return (
-    <div>
+    <div className={"flex justify-center"}>
       {isGameOver ? (
-        <div className={"flex justify-center items-center"}>
+        <div className={"flex  items-center"}>
           <p className={"font-bold text-primary"}>
             You scored {score}/{AppContext?.data.length} correct answers
           </p>
