@@ -23,19 +23,33 @@ function Score() {
 
   return (
     <div>
-      <p>{isGameOver ? "dolu" : "boş"}</p>
-      <p>{score}</p>
-      <button
-        className={
-          "text-secondary text-sm font-semibold bg-primary_bg py-3 px-5 rounded-xl self-center"
-        }
-        onClick={(e) => {
-          finishGame();
-          AppContext?.checkAnswers(e);
-        }}
-      >
-        Check answers
-      </button>
+      {isGameOver ? (
+        <div className={"flex justify-center items-center"}>
+          <p className={"font-bold text-primary"}>
+            You scored {score}/{AppContext?.data.length} correct answers
+          </p>
+          <button
+            className={
+              "text-secondary text-sm font-semibold bg-primary_bg py-3 px-5 rounded-xl self-center ml-6"
+            }
+            onClick={(e) => AppContext?.setIsQuestionsReady(false)}
+          >
+            Play again
+          </button>
+        </div>
+      ) : (
+        <button
+          className={
+            "text-secondary text-sm font-semibold bg-primary_bg py-3 px-5 rounded-xl self-center"
+          }
+          onClick={(e) => {
+            finishGame();
+            AppContext?.checkAnswers(e);
+          }}
+        >
+          Check answers
+        </button>
+      )}
     </div>
   );
 }
