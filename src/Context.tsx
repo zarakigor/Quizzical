@@ -10,9 +10,12 @@ export interface IData {
   choices: string[];
 }
 
+// anyleri düzelt
+
 interface IContext {
   difficulty: string | null;
   isQuestionsReady: boolean;
+  setIsQuestionsReady: any;
   handleDifficulty: (event: React.MouseEvent<HTMLButtonElement>) => void;
   startQuiz: React.MouseEventHandler<HTMLButtonElement> | undefined;
   data: Array<IData>;
@@ -108,6 +111,7 @@ function ContextProvider({ children }: IContextProvider) {
         difficulty,
         handleDifficulty,
         isQuestionsReady,
+        setIsQuestionsReady,
         startQuiz,
         data,
         chosenChoices,
