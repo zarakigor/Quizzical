@@ -14,9 +14,11 @@ export interface IData {
 
 interface IContext {
   difficulty: string | null;
+  handleDifficulty: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  category: string | null;
+  handleCategory: any;
   isQuestionsReady: boolean;
   setIsQuestionsReady: any;
-  handleDifficulty: (event: React.MouseEvent<HTMLButtonElement>) => void;
   startQuiz: React.MouseEventHandler<HTMLButtonElement> | undefined;
   data: Array<IData>;
   chosenChoices: string[];
@@ -30,6 +32,7 @@ const Context = createContext<IContext | null>(null);
 
 function ContextProvider({ children }: IContextProvider) {
   const [difficulty, setDifficulty] = useState<string | null>(null);
+  const [category, setCategory] = useState<string | null>("");
   const [isQuestionsReady, setIsQuestionsReady] = useState<boolean>(false);
 
   const [data, setData] = useState<Array<IData>>([]);
@@ -40,10 +43,17 @@ function ContextProvider({ children }: IContextProvider) {
     setDifficulty(event.currentTarget.value);
   }
 
+  function handleCategory(event: React.MouseEvent<HTMLButtonElement>) {
+    console.log(event.currentTarget.value);
+    setCategory(event.currentTarget.value);
+  }
+
   function startQuiz() {
     if (difficulty) {
       setIsQuestionsReady(true);
     }
+    setDifficulty(null);
+    setCategory("");
   }
 
   // to prevent displaying correct answer at last index
@@ -71,12 +81,13 @@ function ContextProvider({ children }: IContextProvider) {
 
   useEffect(() => {
     fetch(
-      `https://opentdb.com/api.php?amount=5&difficulty=${difficulty}&type=multiple`
+      `https://opentdb.com/api.php?amount=5&category=${category}&difficulty=${difficulty}&type=multiple`
     )
       .then((res) => res.json())
       .then((data) => {
         let arrayOfQuestions = [];
         let arrayOfCorrectAnswers = [];
+        console.log(data);
 
         for (let i = 0; i < 5; i++) {
           let questionPackage: {
@@ -103,13 +114,15 @@ function ContextProvider({ children }: IContextProvider) {
         setData(arrayOfQuestions);
         setCorrectAnswers(arrayOfCorrectAnswers);
       });
-  }, [difficulty]);
+  }, [difficulty, category]);
 
   return (
     <Context.Provider
       value={{
         difficulty,
         handleDifficulty,
+        category,
+        handleCategory,
         isQuestionsReady,
         setIsQuestionsReady,
         startQuiz,
