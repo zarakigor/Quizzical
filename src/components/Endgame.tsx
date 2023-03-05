@@ -23,7 +23,19 @@ function Score() {
 
   return (
     <div className={"flex justify-center"}>
-      {isGameOver ? (
+      {!isGameOver ? (
+        <button
+          className={
+            "text-secondary text-sm font-semibold bg-primary_bg py-3 px-5 rounded-xl self-center"
+          }
+          onClick={(e) => {
+            finishGame();
+            AppContext?.checkAnswers(e);
+          }}
+        >
+          Check answers
+        </button>
+      ) : (
         <div className={"flex  items-center"}>
           <p className={"font-bold text-primary"}>
             You scored {score}/{AppContext?.data.length} correct answers
@@ -37,18 +49,6 @@ function Score() {
             Play again
           </button>
         </div>
-      ) : (
-        <button
-          className={
-            "text-secondary text-sm font-semibold bg-primary_bg py-3 px-5 rounded-xl self-center"
-          }
-          onClick={(e) => {
-            finishGame();
-            AppContext?.checkAnswers(e);
-          }}
-        >
-          Check answers
-        </button>
       )}
     </div>
   );
