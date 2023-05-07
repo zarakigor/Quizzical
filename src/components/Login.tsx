@@ -78,9 +78,11 @@ function Login() {
 
       <button
         className={
-          "text-secondary font-medium bg-primary_bg mt-4 py-4 px-14 rounded-2xl"
+          "text-secondary font-medium bg-primary_bg mt-4 py-4 px-14 rounded-2xl "
         }
-        onClick={AppContext?.startQuiz}
+        onClick={
+          AppContext?.areQuestionsReady ? AppContext?.startQuiz : undefined
+        }
       >
         Start Quiz
       </button>
