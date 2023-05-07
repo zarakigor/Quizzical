@@ -3,7 +3,6 @@ import { Context } from "../Context";
 
 function Score() {
   const AppContext = useContext(Context);
-  const [isGameOver, setisGameOver] = useState<boolean>(false);
   const [score, setScore] = useState<number>(0);
 
   function countCorrectAnswers() {
@@ -16,21 +15,21 @@ function Score() {
     setScore(score);
   }
 
-  function finishGame() {
-    setisGameOver(!isGameOver);
+  function finishTheGame(e: any): void {
+    AppContext?.setIsGameOver(!AppContext?.isGameOver);
+    AppContext?.checkAnswers(e);
     countCorrectAnswers();
   }
 
   return (
     <div className={"flex justify-center"}>
-      {!isGameOver ? (
+      {!AppContext?.isGameOver ? (
         <button
           className={
             "text-secondary text-sm font-semibold bg-primary_bg py-3 px-5 rounded-xl self-center"
           }
           onClick={(e) => {
-            finishGame();
-            AppContext?.checkAnswers(e);
+            finishTheGame(e);
           }}
         >
           Check answers
@@ -44,7 +43,9 @@ function Score() {
             className={
               "text-secondary text-sm font-semibold bg-primary_bg py-3 px-5 rounded-xl self-center ml-6"
             }
-            onClick={(e) => AppContext?.setIsQuestionsReady(false)}
+            onClick={(e) => {
+              AppContext?.restartTheGame(e);
+            }}
           >
             Play again
           </button>
