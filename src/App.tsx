@@ -20,7 +20,7 @@ function App() {
 
   return (
     <div className={""}>
-      {AppContext?.isQuestionsReady ? (
+      {AppContext?.IsQuizStarted ? (
         <div className={"flex flex-col mt-10 mx-10"}>
           {QuizElements}
 
@@ -36,3 +36,5 @@ function App() {
 export default App;
 
 // https://opentdb.com/api.php?amount=5&difficulty=medium
+// check answerdan sonra buttonları deactive et
+// strict mode silindi  geri ekleebilirsin
