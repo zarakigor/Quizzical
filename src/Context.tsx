@@ -10,50 +10,65 @@ export interface IData {
   choices: string[];
 }
 
-// anyleri düzelt
-
 interface IContext {
   difficulty: string | null;
-  handleDifficulty: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  handleDifficulty: (event: {
+    currentTarget: { value: React.SetStateAction<string | null> };
+  }) => void;
   category: string | null;
-  handleCategory: any;
-  isQuestionsReady: boolean;
-  setIsQuestionsReady: any;
+  handleCategory: (event: {
+    currentTarget: { value: React.SetStateAction<string | null> };
+  }) => void;
+  areQuestionsReady: boolean;
   startQuiz: React.MouseEventHandler<HTMLButtonElement> | undefined;
+  IsQuizStarted: boolean;
+  restartTheGame: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  isGameOver: boolean;
+  setIsGameOver: React.Dispatch<React.SetStateAction<boolean>>;
   data: Array<IData>;
   chosenChoices: string[];
   setChosenChoices: React.Dispatch<React.SetStateAction<string[]>>;
   correctAnswers: string[];
   checkAnswers: React.MouseEventHandler<HTMLButtonElement>;
-  shuffle: any;
+  shuffle: (arr: string[]) => string[];
 }
 
 const Context = createContext<IContext | null>(null);
 
 function ContextProvider({ children }: IContextProvider) {
-  const [difficulty, setDifficulty] = useState<string | null>(null);
+  const [difficulty, setDifficulty] = useState<string | null>("");
   const [category, setCategory] = useState<string | null>("");
-  const [isQuestionsReady, setIsQuestionsReady] = useState<boolean>(false);
+  const [areQuestionsReady, setAreQuestionsReady] = useState<boolean>(false);
+  const [IsQuizStarted, setIsQuizStarted] = useState<boolean>(false);
+  const [isGameOver, setIsGameOver] = useState<boolean>(false);
 
   const [data, setData] = useState<Array<IData>>([]);
   const [chosenChoices, setChosenChoices] = useState(["", "", "", "", ""]);
   const [correctAnswers, setCorrectAnswers] = useState<string[]>([]);
 
-  function handleDifficulty(event: React.MouseEvent<HTMLButtonElement>): void {
+  function handleDifficulty(event: {
+    currentTarget: { value: React.SetStateAction<string | null> };
+  }) {
     setDifficulty(event.currentTarget.value);
+    setAreQuestionsReady(true);
   }
 
-  function handleCategory(event: React.MouseEvent<HTMLButtonElement>) {
-    console.log(event.currentTarget.value);
+  function handleCategory(event: {
+    currentTarget: { value: React.SetStateAction<string | null> };
+  }) {
     setCategory(event.currentTarget.value);
+    setAreQuestionsReady(true);
+  }
+
+  function restartTheGame() {
+    setCategory("");
+    setDifficulty("");
+    setAreQuestionsReady(false);
+    setIsQuizStarted(false);
   }
 
   function startQuiz() {
-    if (difficulty) {
-      setIsQuestionsReady(true);
-    }
-    setDifficulty(null);
-    setCategory("");
+    setIsQuizStarted(true);
   }
 
   // to prevent displaying correct answer at last index
@@ -61,7 +76,7 @@ function ContextProvider({ children }: IContextProvider) {
     return [...arr].sort(() => Math.random() - 0.5);
   }
 
-  function checkAnswers(e: any) {
+  function checkAnswers(e: any): void {
     document.querySelectorAll(".choice").forEach((choice) => {
       choice.classList.add("text-opacity-50");
     });
@@ -80,6 +95,7 @@ function ContextProvider({ children }: IContextProvider) {
   }
 
   useEffect(() => {
+    console.log("qwe");
     fetch(
       `https://opentdb.com/api.php?amount=5&category=${category}&difficulty=${difficulty}&type=multiple`
     )
@@ -114,7 +130,7 @@ function ContextProvider({ children }: IContextProvider) {
         setData(arrayOfQuestions);
         setCorrectAnswers(arrayOfCorrectAnswers);
       });
-  }, [difficulty, category]);
+  }, [category, difficulty]);
 
   return (
     <Context.Provider
@@ -123,15 +139,18 @@ function ContextProvider({ children }: IContextProvider) {
         handleDifficulty,
         category,
         handleCategory,
-        isQuestionsReady,
-        setIsQuestionsReady,
+        areQuestionsReady,
         startQuiz,
+        IsQuizStarted,
+        restartTheGame,
         data,
         chosenChoices,
         setChosenChoices,
         correctAnswers,
         checkAnswers,
         shuffle,
+        isGameOver,
+        setIsGameOver,
       }}
     >
       {children}
@@ -140,5 +159,3 @@ function ContextProvider({ children }: IContextProvider) {
 }
 
 export { ContextProvider, Context };
-
-//replace i bir function yap tekrarlanabilir olsun
