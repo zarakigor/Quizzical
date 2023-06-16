@@ -18,6 +18,10 @@ function Score() {
 
   function finishTheGame() {
     setIsGameOver(!isGameOver);
+    // to prevent the user from changing the choices
+    document.querySelectorAll(".choice").forEach((choice) => {
+      choice.classList.add("pointer-events-none");
+    });
     countCorrectAnswers();
   }
 
