@@ -23,8 +23,6 @@ interface IContext {
   startQuiz: React.MouseEventHandler<HTMLButtonElement> | undefined;
   IsQuizStarted: boolean;
   restartTheGame: (event: React.MouseEvent<HTMLButtonElement>) => void;
-  isGameOver: boolean;
-  setIsGameOver: React.Dispatch<React.SetStateAction<boolean>>;
   data: Array<IData>;
   chosenChoices: string[];
   setChosenChoices: React.Dispatch<React.SetStateAction<string[]>>;
@@ -40,7 +38,6 @@ function ContextProvider({ children }: IContextProvider) {
   const [category, setCategory] = useState<string | null>("");
   const [areQuestionsReady, setAreQuestionsReady] = useState<boolean>(false);
   const [IsQuizStarted, setIsQuizStarted] = useState<boolean>(false);
-  const [isGameOver, setIsGameOver] = useState<boolean>(false);
 
   const [data, setData] = useState<Array<IData>>([]);
   const [chosenChoices, setChosenChoices] = useState(["", "", "", "", ""]);
@@ -95,7 +92,6 @@ function ContextProvider({ children }: IContextProvider) {
   }
 
   useEffect(() => {
-    console.log("qwe");
     fetch(
       `https://opentdb.com/api.php?amount=5&category=${category}&difficulty=${difficulty}&type=multiple`
     )
@@ -103,7 +99,6 @@ function ContextProvider({ children }: IContextProvider) {
       .then((data) => {
         let arrayOfQuestions = [];
         let arrayOfCorrectAnswers = [];
-        console.log(data);
 
         for (let i = 0; i < 5; i++) {
           let questionPackage: {
@@ -149,8 +144,6 @@ function ContextProvider({ children }: IContextProvider) {
         correctAnswers,
         checkAnswers,
         shuffle,
-        isGameOver,
-        setIsGameOver,
       }}
     >
       {children}
