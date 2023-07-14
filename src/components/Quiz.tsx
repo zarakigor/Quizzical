@@ -16,6 +16,7 @@ function Quiz(props: IData) {
       let element = document.getElementsByClassName(`${props.index}`)[i];
       element.classList.remove("bg-secondary_bg", "border-transparent");
     }
+    console.log(e);
 
     updateChosenChoices(e.target.value);
     e.target.classList.add("bg-secondary_bg", "border-transparent");
