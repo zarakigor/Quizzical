@@ -10,7 +10,9 @@ function Login() {
       }
     >
       <h1 className={"font-karla font-bold text-3xl"}>Quizzical</h1>
-      <h3 className={"font-inter mt-2 mb-7"}>burayi en sonda sil</h3>
+      <h3 className={"font-inter mt-2 mb-3"}>
+        Choose a difficulty and/or a category
+      </h3>
 
       <select onChange={AppContext?.handleCategory}>
         <option value="">Any Category</option>
@@ -40,9 +42,9 @@ function Login() {
         <option value="28">Vehicles</option>
       </select>
 
-      <div>
+      <div className={"mt-5"}>
         <button
-          className={`text-sm mx-1 border-primary border-2 rounded-2xl py-2 px-2 ${
+          className={`text-sm mx-1 border-primary border rounded-2xl py-2 px-2 ${
             AppContext?.difficulty === "easy"
               ? "bg-primary_bg text-secondary border-transparent"
               : ""
@@ -53,7 +55,7 @@ function Login() {
           Easy
         </button>
         <button
-          className={`text-sm mx-1 border-primary border-2 rounded-2xl py-2 px-2 ${
+          className={`text-sm mx-1 border-primary border rounded-2xl py-2 px-2 ${
             AppContext?.difficulty === "medium"
               ? "bg-primary_bg text-secondary border-transparent"
               : ""
@@ -64,7 +66,7 @@ function Login() {
           Medium
         </button>
         <button
-          className={`text-sm mx-1 border-primary border-2 rounded-2xl py-2 px-2 ${
+          className={`text-sm mx-1 border-primary border rounded-2xl py-2 px-2 ${
             AppContext?.difficulty === "hard"
               ? "bg-primary_bg text-secondary border-transparent"
               : ""
