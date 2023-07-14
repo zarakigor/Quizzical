@@ -34,7 +34,3 @@ function App() {
 }
 
 export default App;
-
-// https://opentdb.com/api.php?amount=5&difficulty=medium
-// check answerdan sonra buttonları deactive et
-// strict mode silindi  geri ekleebilirsin
